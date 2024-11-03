@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 async function loadMdxFile(): Promise<any> {
   try {
-    const mdxModule = await import("@/content/pages/about.mdx");
+    const mdxModule = await import("@/content/pages/privacy.mdx");
     return mdxModule;
   } catch (error) {
     console.error("Failed to load MDX file:", error);
@@ -31,21 +31,21 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // Render the About page using the dynamically imported content
-export default async function AboutPage() {
+export default async function PrivacyPage() {
   const mdxModule = await loadMdxFile();
 
   if (!mdxModule) {
     return <p>Page not found</p>; // Handle the case where the MDX file is not found
   }
 
-  const { default: AboutContent, metadata } = mdxModule;
+  const { default: PrivacyContent, metadata } = mdxModule;
 
   return (
-    <div className="flex flex-col max-w-3xl w-full gap-8 pt-10">
+    <div className="flex flex-col max-w-3xl gap-8 pt-10">
       <h1 className="text-6xl font-black">{metadata.title}</h1>
       {/* Add the prose class here */}
       <article className="prose prose-lg mx-auto w-full">
-        <AboutContent />
+        <PrivacyContent />
       </article>
     </div>
   );

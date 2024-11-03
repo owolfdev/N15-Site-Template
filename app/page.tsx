@@ -1,12 +1,52 @@
-import Hero from "@/components/hero";
-import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+import React from "react";
+import type { Metadata } from "next";
 
-export default async function Index() {
+// Dynamically import the MDX file to access metadata and content
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+async function loadMdxFile(): Promise<any> {
+  try {
+    const mdxModule = await import("@/content/pages/home.mdx");
+    return mdxModule;
+  } catch (error) {
+    console.error("Failed to load MDX file:", error);
+    return null;
+  }
+}
+
+// Generate metadata using the imported metadata from the MDX file
+export async function generateMetadata(): Promise<Metadata> {
+  const mdxModule = await loadMdxFile();
+  if (!mdxModule) {
+    return {
+      title: "Page Not Found",
+      description: "",
+    };
+  }
+  const { metadata } = mdxModule;
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+  };
+}
+
+// Render the About page using the dynamically imported content
+export default async function HomePage() {
+  const mdxModule = await loadMdxFile();
+
+  if (!mdxModule) {
+    return <p>Page not found</p>; // Handle the case where the MDX file is not found
+  }
+
+  const { default: HomeContent, metadata } = mdxModule;
+
   return (
-    <>
-      <h1 className="text-6xl font-black">Home</h1>
-    </>
+    <div className="flex flex-col max-w-3xl w-full gap-8 pt-10">
+      <h1 className="text-6xl font-black">{metadata.title}</h1>
+      {/* Add the prose class here */}
+      <article className="prose prose-lg mx-auto w-full">
+        <HomeContent />
+      </article>
+    </div>
   );
 }

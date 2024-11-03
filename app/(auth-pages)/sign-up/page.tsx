@@ -1,5 +1,5 @@
-import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
+import { signUpAction } from "@/app/actions/auth-actions";
+import { FormMessage, type Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,9 +19,9 @@ export default async function Signup(props: {
   }
 
   return (
-    <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-        <h1 className="text-2xl font-medium">Sign up</h1>
+    <div className="flex flex-col items-center max-w-3xl gap-8 pt-12">
+      <form className="flex-1 flex flex-col sm:w-[500px] w-[300px] gap-4">
+        <h1 className="text-6xl font-black">Sign Up</h1>
         <p className="text-sm text text-foreground">
           Already have an account?{" "}
           <Link className="text-primary font-medium underline" href="/sign-in">
@@ -46,6 +46,6 @@ export default async function Signup(props: {
         </div>
       </form>
       {/* <SmtpMessage /> */}
-    </>
+    </div>
   );
 }
