@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "test",
+    "id": "1194de17-4702-4864-b141-f718c122363c",
+    "type": "blog",
+    "title": "Test",
+    "author": "O. Wolfson",
+    "publishDate": "2024-11-06",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "categories": [
+      "Web Development"
+    ],
+    "tags": [
+      "test"
+    ],
+    "modifiedDate": "2024-11-05T19:20:53.293Z",
+    "image": null,
+    "draft": false,
+    "relatedPosts": [],
+    "likes": 0
+  }
+]

@@ -40,7 +40,7 @@ export async function getPosts({
   try {
     const cacheFilePath = path.join(
       process.cwd(),
-      "cache/published-posts.json"
+      "content/cache/published-posts.json"
     );
 
     console.log("Cache file path:", cacheFilePath);

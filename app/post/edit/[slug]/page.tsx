@@ -14,12 +14,10 @@ async function EditBlog({ params }: { params: { slug: string } }) {
 
   return (
     <div className="flex flex-col gap-8 pb-6 w-full max-w-3xl sm:max-w-3xl">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-4xl sm:text-5xl font-bold text-center">
-          Edit Post
-        </h1>
-        <p className="w-full text-center text-3xl font-bold">
-          {post.metadata.title}
+      <div className="flex flex-col max-w-3xl w-full gap-8 pt-10">
+        <h1 className="text-6xl font-black">Edit Post</h1>
+        <p className="w-full text-2xl">
+          Post title: <span className="font-bold">{post.metadata.title}</span>
         </p>
         <EditPostForm postData={post} />
       </div>

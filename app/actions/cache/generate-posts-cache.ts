@@ -87,7 +87,7 @@ export async function generatePostsCache() {
     }
   }
 
-  const cacheDir = path.join(process.cwd(), "cache");
+  const cacheDir = path.join(process.cwd(), "content/cache");
   if (!fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir);
   }

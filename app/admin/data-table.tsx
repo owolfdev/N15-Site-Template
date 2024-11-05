@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import postsData from "@/cache/all-posts.json"; // Import the JSON data directly
+import postsData from "@/content/cache/all-posts.json"; // Import the JSON data directly
 import {
   CaretSortIcon,
   ChevronDownIcon,

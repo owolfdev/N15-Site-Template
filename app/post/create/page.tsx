@@ -5,10 +5,8 @@ import { buttonVariants } from "@/components/ui/button";
 export default function CreatePost() {
   return (
     <div className="w-full max-w-3xl">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-4xl sm:text-5xl font-black text-center">
-          Create a Post
-        </h1>
+      <div className="flex flex-col max-w-3xl w-full gap-8 pt-10">
+        <h1 className="text-6xl font-black">Create a Post</h1>
         <CreatePostForm />
       </div>
       <div className="pt-6">

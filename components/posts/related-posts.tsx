@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { getRelatedPostTitles } from "@/app/actions/posts/etRelatedPostTitles";
+import { getRelatedPostTitles } from "@/app/actions/posts/getRelatedPostTitles";
 
 type RelatedPostsListProps = {
   relatedSlugs: string[] | null;

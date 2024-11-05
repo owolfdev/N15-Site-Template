@@ -7,7 +7,7 @@ import { openInCursorAction } from "@/app/actions/open-actions";
 function OpenInCursor({ path }: { path: string }) {
   const router = useRouter();
   const handleOpenInCursor = async () => {
-    const filePath = `content/posts/${path}.mdx`;
+    const filePath = `content/pages/${path}.mdx`;
     const response = await openInCursorAction(filePath);
     if (response.ok) {
       // router.push("/settings");
