@@ -3,7 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { HamburgerMenuIcon, GearIcon, PlusIcon } from "@radix-ui/react-icons";
 import { isDevMode } from "@/lib/utils/is-dev-mode";
@@ -25,11 +31,13 @@ function NavComponent() {
     <div className="flex items-center gap-4">
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="md:hidden">
+          <Button variant="outline" size="icon" className="sm:hidden">
             <HamburgerMenuIcon className="h-[18px] w-[18px]" />
           </Button>
         </SheetTrigger>
+
         <SheetContent side="left">
+          <SheetTitle>Menu</SheetTitle>
           <nav className="flex flex-col space-y-4 mt-6">
             {navItems.map((item) => (
               <Link
@@ -39,7 +47,8 @@ function NavComponent() {
                   isActive(item.href) ? "font-semibold" : ""
                 }`}
               >
-                {item.label}
+                {" "}
+                <SheetClose>{item.label}</SheetClose>
               </Link>
             ))}
           </nav>
@@ -50,7 +59,7 @@ function NavComponent() {
         <h1 className="text-4xl font-black mr-6">
           <Link href="/">LOGO</Link>
         </h1>
-        <nav className="hidden md:flex space-x-6">
+        <nav className="hidden sm:flex h-9 space-x-6  items-end">
           {navItems.map((item) => (
             <Link
               key={item.href}

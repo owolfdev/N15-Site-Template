@@ -1,6 +1,6 @@
 import React from "react";
 import { EditPostForm } from "./edit-post-form";
-import { getPost } from "@/lib/posts/get-post";
+import { getPost } from "@/app/actions/posts/get-post";
 import type { Post } from "@/types/post-types";
 
 async function EditBlog({ params }: { params: { slug: string } }) {

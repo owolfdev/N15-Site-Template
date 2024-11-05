@@ -1,0 +1,45 @@
+[
+  {
+    "slug": "about-us",
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "type": "blog",
+    "title": "About",
+    "author": "O Wolfson",
+    "publishDate": "2024-01-10",
+    "description": "About la la la la.",
+    "categories": [
+      "Web Development"
+    ],
+    "tags": [
+      "mdx",
+      "guide"
+    ],
+    "modifiedDate": "2024-11-05T06:39:41.181Z",
+    "image": null,
+    "draft": false,
+    "relatedPosts": [],
+    "likes": 1
+  },
+  {
+    "slug": "hello-world",
+    "id": "3161051c-92f3-4730-83a9-aba72588219e",
+    "type": "blog",
+    "title": "Hello World",
+    "author": "O. Wolfson",
+    "publishDate": "2024-11-05",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "categories": [
+      "Web Development"
+    ],
+    "tags": [
+      ""
+    ],
+    "modifiedDate": "2024-11-05T06:38:03.754Z",
+    "image": null,
+    "draft": false,
+    "relatedPosts": [
+      "about-us"
+    ],
+    "likes": 0
+  }
+]

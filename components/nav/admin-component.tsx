@@ -9,7 +9,7 @@ export function AdminButtons() {
 
   return (
     <div className="items-center space-x-4 hidden md:flex">
-      <Link href="/blog/create" title="Create post">
+      <Link href="/post/create" title="Create post">
         <Button variant="outline" size="icon">
           <PlusIcon className="h-[18px] w-[18px]" />
         </Button>

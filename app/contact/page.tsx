@@ -8,9 +8,19 @@ export default async function Contact(props: {
   searchParams: Promise<Message>;
 }) {
   const searchParams = await props.searchParams;
+
+  const action = async (formData: FormData) => {
+    "use server";
+    console.log(formData);
+    console.log("hello");
+  };
+
   return (
     <div className="flex flex-col items-center max-w-3xl gap-8 pt-12">
-      <form className="flex-1 flex flex-col sm:w-[500px] w-[300px] gap-4">
+      <form
+        className="flex-1 flex flex-col sm:w-[500px] w-[300px] gap-4"
+        action={action}
+      >
         <h1 className="text-6xl font-black">Contact</h1>
         <p className="text-sm text-foreground">
           Have a question or feedback? Use the form below to get in touch with

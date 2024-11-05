@@ -1,28 +1,24 @@
-import type React from "react";
-import { getPosts } from "@/lib/posts/get-posts.mjs";
+import React from "react";
+import { getPosts } from "@/app/actions/posts/get-posts";
 import Link from "next/link";
+import type { Post } from "@/types/post-types";
 
 type RelatedPostsListProps = {
   relatedSlugs: string[] | null;
 };
 
-const RelatedPostsList: React.FC<RelatedPostsListProps> = ({
-  relatedSlugs,
-}) => {
+const RelatedPostsList = async ({ relatedSlugs }: RelatedPostsListProps) => {
   if (!relatedSlugs || relatedSlugs.length === 0) {
     return null;
   }
 
   // Fetch all posts
-  const { posts } = getPosts();
+  const { posts } = await getPosts({});
 
   // Filter posts to include only those that match the relatedSlugs
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const relatedPosts = posts.filter((post: any) =>
-    relatedSlugs.includes(post.slug)
-  );
+  const relatedPosts = posts.filter((post) => relatedSlugs.includes(post.slug));
 
-  if (relatedPosts?.length === 0) {
+  if (relatedPosts.length === 0) {
     return null;
   }
 
@@ -31,8 +27,7 @@ const RelatedPostsList: React.FC<RelatedPostsListProps> = ({
       <hr className="pb-8" />
       <h3 className="text-xl font-bold mb-4">Related Posts</h3>
       <ul>
-        {/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
-        {relatedPosts.map((post: any) => (
+        {relatedPosts.map((post) => (
           <li key={post.slug} className="mb-2">
             <Link
               href={`/blog/${post.slug}`}
