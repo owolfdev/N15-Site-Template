@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import DatePickerField from "@/components/date-picker";
+import { DatePicker } from "@/components/date-picker";
 import { v4 as uuidv4 } from "uuid";
 import {
   Select,
@@ -165,7 +165,7 @@ export function CreatePostForm() {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel className="font-semibold text-md">Date</FormLabel>
-              <DatePickerField field={field} />
+              <DatePicker />
               <FormMessage />
             </FormItem>
           )}

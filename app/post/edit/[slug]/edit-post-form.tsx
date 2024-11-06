@@ -30,7 +30,7 @@ import {
 import { cachePostsAction } from "@/app/actions/cache-actions";
 import { deletePostAction } from "@/app/actions/delete-post-action";
 import { editPostAction } from "@/app/actions/edit-post-action";
-import DatePickerField from "@/components/date-picker";
+import { DatePicker } from "@/components/date-picker";
 import type { Post } from "@/types/post-types";
 import categoriesData from "@/settings/categories.json";
 import authorsData from "@/settings/authors.json";
@@ -242,7 +242,7 @@ export function EditPostForm({ postData }: { postData: Post }) {
             render={({ field }) => (
               <FormItem className="flex flex-col gap-1">
                 <FormLabel>Date</FormLabel>
-                <DatePickerField field={field} />
+                <DatePicker />
                 <FormMessage />
               </FormItem>
             )}
