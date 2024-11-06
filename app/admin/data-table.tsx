@@ -203,7 +203,7 @@ export const columns: ColumnDef<Post>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/blog/edit/${post.slug}`}>Edit</Link>
+              <Link href={`/post/edit/${post.slug}`}>Edit</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -7,7 +7,7 @@ function LogoutButton() {
   const supabase = createClient();
   async function handleLogout() {
     await supabase.auth.signOut();
-    router.push("/login");
+    router.push("/sign-in");
     router.refresh();
   }
   return <Button onClick={handleLogout}>Logout</Button>;
