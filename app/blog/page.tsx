@@ -34,7 +34,7 @@ function getFirstValue(param: string | string[] | undefined): string {
 const Blog = async ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   // Ensure searchParams is processed asynchronously
   const params = await searchParams;

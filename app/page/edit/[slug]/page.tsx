@@ -3,8 +3,8 @@ import { EditPageForm } from "./edit-page-form";
 import { getPage } from "@/app/actions/pages/get-page";
 import type { Page } from "@/types/page-types";
 
-async function EditBlog({ params }: { params: { slug: string } }) {
-  const pageData = await getPage({ slug: params.slug });
+async function EditPage({ params }: { params: Promise<{ slug: string }> }) {
+  const pageData = await getPage({ slug: (await params).slug });
 
   if ("notFound" in pageData && pageData.notFound) {
     return <div>Post not found</div>; // Handle not found case
@@ -25,4 +25,4 @@ async function EditBlog({ params }: { params: { slug: string } }) {
   );
 }
 
-export default EditBlog;
+export default EditPage;

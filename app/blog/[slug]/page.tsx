@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import path from "node:path";
 import fs from "node:fs";
+//
 import RelatedPostsList from "@/components/posts/related-posts";
 import LikeButton from "@/components/like/like-button";
 import EditPostButton from "@/components/posts/edit-post-button";
@@ -10,10 +11,11 @@ import OpenInCursor from "@/components/posts/open-in-cursor-button";
 import { isDevMode } from "@/lib/utils/is-dev-mode";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 // Dynamically import the MDX file based on the slug
+
 async function loadMdxFile(slug: string) {
   try {
     const mdxPath = path.join(process.cwd(), "content", "posts", `${slug}.mdx`);
@@ -28,50 +30,49 @@ async function loadMdxFile(slug: string) {
   }
 }
 
-// Generate metadata using the imported metadata from the MDX file
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params; // Moved here
-  const mdxModule = await loadMdxFile(slug);
+  if (!params || !(await params).slug) {
+    throw new Error("Params are missing or slug is undefined");
+  }
 
+  const { slug } = await params;
+  const mdxModule = await loadMdxFile(slug);
   if (!mdxModule) {
     return {
       title: "Post Not Found",
       description: "",
     };
   }
-  const { metadata } = mdxModule;
 
+  const { metadata } = mdxModule;
   return {
     title: metadata.title,
     description: metadata.description,
   };
 }
-
 export default async function Blog({ params }: Props) {
-  const { slug } = await params; // Moved here
+  if (!params || !(await params).slug) {
+    notFound();
+  }
+
+  const { slug } = await params;
   const mdxModule = await loadMdxFile(slug);
 
   if (!mdxModule) {
-    notFound(); // Return a 404 page if the MDX file is not found
+    notFound();
   }
 
   const { default: Content, metadata } = mdxModule;
-
-  // Extract the dates and compare them
   const publishDate = new Date(metadata?.publishDate);
   const modifiedDate = new Date(metadata?.modifiedDate);
-
-  // Choose the date to display
   const displayDate =
     modifiedDate > publishDate ? metadata?.modifiedDate : metadata?.publishDate;
-
-  // Format the original published date
   const originallyPublishedDateFormatted = publishDate.toLocaleDateString(
     "en-US",
     {
-      year: "numeric", // "2024"
-      month: "short", // "Aug"
-      day: "numeric", // "31"
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     }
   );
 
@@ -100,7 +101,6 @@ export default async function Blog({ params }: Props) {
           </h1>
           <p className="pt-6 text-xl sm:text-lg">By {metadata?.author}</p>
         </div>
-        {/* Render the dynamically loaded MDX content */}
         {isDevMode() && (
           <div className="flex gap-2 mb-4">
             <EditPostButton slug={slug} />
@@ -117,16 +117,4 @@ export default async function Blog({ params }: Props) {
       <LikeButton postId={metadata?.id} />
     </div>
   );
-}
-
-// Generate static paths for all slugs based on MDX files in the posts directory
-export async function generateStaticParams() {
-  const files = fs.readdirSync(path.join("content", "posts"));
-  const params = files
-    .filter((filename) => filename.endsWith(".mdx")) // Only process MDX files
-    .map((filename) => ({
-      slug: filename.replace(".mdx", ""),
-    }));
-
-  return params;
 }

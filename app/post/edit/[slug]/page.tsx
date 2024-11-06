@@ -3,8 +3,8 @@ import { EditPostForm } from "./edit-post-form";
 import { getPost } from "@/app/actions/posts/get-post";
 import type { Post } from "@/types/post-types";
 
-async function EditBlog({ params }: { params: { slug: string } }) {
-  const postData = await getPost({ slug: params.slug });
+async function EditBlog({ params }: { params: Promise<{ slug: string }> }) {
+  const postData = await getPost({ slug: (await params).slug });
 
   if ("notFound" in postData && postData.notFound) {
     return <div>Post not found</div>; // Handle not found case
