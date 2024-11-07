@@ -74,7 +74,12 @@ export default async function Contact(props: {
         </p>
         <div className="flex flex-col gap-2 [&>input]:mb-3 [&>textarea]:mb-3 mt-8">
           <Label htmlFor="name">Name</Label>
-          <Input name="name" placeholder="Your name" required />
+          <Input
+            name="name"
+            placeholder="Your name"
+            required
+            className="text-lg"
+          />
 
           <Label htmlFor="email">Email</Label>
           <Input
@@ -82,6 +87,7 @@ export default async function Contact(props: {
             type="email"
             placeholder="you@example.com"
             required
+            className="text-lg"
           />
 
           <Label htmlFor="message">Message</Label>
@@ -89,7 +95,7 @@ export default async function Contact(props: {
             name="message"
             placeholder="Your message"
             required
-            className="min-h-[100px]"
+            className="min-h-[100px] text-lg"
           />
 
           <SubmitButton pendingText="Sending...">Send Message</SubmitButton>
