@@ -49,7 +49,7 @@ export default async function Contact(props: {
 
     // Insert data into Supabase
     const { error } = await supabase
-      .from("contacts")
+      .from("contact_messages")
       .insert([{ name, email, message }]);
 
     if (error) {
