@@ -5,7 +5,6 @@ import SortPosts from "@/components/posts/sort-posts";
 import { getPosts } from "@/app/actions/posts/get-posts";
 import BlogPostList from "@/components/posts/blog-post-list";
 import type { Metadata } from "next";
-import type { CachedPost } from "@/types/post-types";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

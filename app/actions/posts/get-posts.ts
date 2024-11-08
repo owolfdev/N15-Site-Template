@@ -43,7 +43,7 @@ export async function getPosts({
       "content/cache/published-posts.json"
     );
 
-    console.log("Cache file path:", cacheFilePath);
+    // console.log("Cache file path:", cacheFilePath);
 
     const jsonData = fs.readFileSync(cacheFilePath, "utf8");
     let posts: Post[] = JSON.parse(jsonData).filter(
@@ -57,8 +57,8 @@ export async function getPosts({
       (post: Post) => !post.slug.startsWith(".") && post.type.includes(type)
     );
 
-    console.log("Type:", type);
-    console.log("Posts after type filter:", posts.length);
+    // console.log("Type:", type);
+    // console.log("Posts after type filter:", posts.length);
 
     // Search filter
     if (searchTerm && searchTerm.trim() !== "") {
@@ -79,7 +79,7 @@ export async function getPosts({
       });
     }
 
-    console.log("Posts after search filter:", posts.length);
+    // console.log("Posts after search filter:", posts.length);
 
     // Category filter
     if (category && category.trim() !== "") {
@@ -93,7 +93,7 @@ export async function getPosts({
       });
     }
 
-    console.log("Posts after category filter:", posts.length);
+    // console.log("Posts after category filter:", posts.length);
 
     const totalPosts = posts.length;
 
@@ -133,12 +133,12 @@ export async function getPosts({
       return 0;
     });
 
-    console.log("Posts after sort:", posts.length);
+    // console.log("Posts after sort:", posts.length);
 
-    console.log(
-      "Posts:",
-      posts.map((post) => post.title)
-    );
+    // console.log(
+    //   "Posts:",
+    //   posts.map((post) => post.title)
+    // );
 
     // Format dates for each post
     for (const post of posts) {
@@ -150,10 +150,10 @@ export async function getPosts({
       });
     }
 
-    console.log(
-      "Posts after date formatting:",
-      posts.map((post) => post.formattedDate)
-    );
+    // console.log(
+    //   "Posts after date formatting:",
+    //   posts.map((post) => post.formattedDate)
+    // );
 
     // Pagination
     const start = ((page ?? 1) - 1) * (limit ?? 10);
@@ -162,7 +162,7 @@ export async function getPosts({
       posts = posts.slice(start, start + limit);
     }
 
-    console.log("Posts fetched:", posts);
+    // console.log("Posts fetched:", posts);
 
     return { posts, totalPosts };
   } catch (error) {

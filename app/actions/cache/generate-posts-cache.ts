@@ -59,6 +59,8 @@ export async function generatePostsCache() {
       const postId = metadata.id;
       const likesCount = await fetchLikesCount(postId);
 
+      console.log("likesCount", likesCount);
+
       const slug = fileName.replace(".mdx", "");
 
       const post = {
@@ -66,6 +68,8 @@ export async function generatePostsCache() {
         ...metadata,
         likes: likesCount,
       };
+
+      console.log("post", post);
 
       const postDate = startOfDay(parseISO(metadata.publishDate));
       return {

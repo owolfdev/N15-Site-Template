@@ -1,3 +1,5 @@
+Based on Supabase Auth Template
+
 npx create-next-app -e with-supabase
 
 <a href="https://demo-nextjs-with-supabase.vercel.app/">
