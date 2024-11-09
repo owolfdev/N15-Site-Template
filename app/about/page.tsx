@@ -20,8 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const mdxModule = await loadMdxFile();
   if (!mdxModule) {
     return {
-      title: "Page Not Found",
-      description: "",
+      title: "About MDXBlog",
+      description: "Learn more about MDXBlog",
     };
   }
   const { metadata } = mdxModule;
