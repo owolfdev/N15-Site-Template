@@ -57,7 +57,7 @@ function NavComponent() {
 
       <div className="flex items-center">
         <h1 className="text-4xl font-black mr-6">
-          <Link href="/">MDX Blog</Link>
+          <Link href="/">MDXBlog</Link>
         </h1>
         <nav className="hidden sm:flex h-9 space-x-6  items-end">
           {navItems.map((item) => (
