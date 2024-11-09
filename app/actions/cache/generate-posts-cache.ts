@@ -10,11 +10,19 @@ function extractMetadata(fileContents: string) {
   const metadataMatch = fileContents.match(
     /export const metadata = ({[\s\S]*?});/
   );
+
   if (metadataMatch) {
-    // biome-ignore lint/security/noGlobalEval: <explanation>
-    const metadata = eval(`(${metadataMatch[1]})`);
-    return metadata;
+    try {
+      // Parse the metadata safely
+      const metadataString = metadataMatch[1];
+      return new Function(`return ${metadataString}`)(); // Safely parse the object
+    } catch (error) {
+      console.error("Failed to parse metadata:", error);
+      return null;
+    }
   }
+
+  console.warn("No metadata match found in file contents.");
   return null;
 }
 
@@ -35,76 +43,96 @@ async function fetchLikesCount(postId: string) {
 }
 
 export async function generatePostsCache() {
-  const postsDirectory = path.join(process.cwd(), "content/posts");
-  const fileNames = fs
-    .readdirSync(postsDirectory)
-    .filter(
-      (fileName) => !fileName.startsWith(".") && fileName.endsWith(".mdx")
+  try {
+    const postsDirectory = path.join(process.cwd(), "content/posts");
+    console.log(`Posts directory: ${postsDirectory}`);
+
+    const fileNames = fs
+      .readdirSync(postsDirectory)
+      .filter(
+        (fileName) => !fileName.startsWith(".") && fileName.endsWith(".mdx")
+      );
+
+    console.log(`Found ${fileNames.length} MDX files:`, fileNames);
+
+    const currentDate = startOfDay(new Date());
+    const allPosts = await Promise.all(
+      fileNames.map(async (fileName) => {
+        const fullPath = path.join(postsDirectory, fileName);
+        // console.log(`Processing file: ${fullPath}`);
+
+        const fileContents = fs.readFileSync(fullPath, "utf8");
+        const metadata = extractMetadata(fileContents);
+
+        if (!metadata) {
+          console.warn(`Metadata missing for file: ${fileName}`);
+          return null;
+        }
+
+        // console.log(`Metadata for ${fileName}:`, metadata);
+
+        const postId = metadata.id;
+        const likesCount = await fetchLikesCount(postId);
+
+        console.log(`Likes count for postId ${postId}: ${likesCount}`);
+
+        const slug = fileName.replace(".mdx", "");
+
+        const post = {
+          slug,
+          ...metadata,
+          likes: likesCount,
+        };
+
+        const postDate = startOfDay(parseISO(metadata.publishDate));
+        return {
+          post,
+          isPublished: !metadata.draft && postDate <= currentDate,
+        };
+      })
     );
 
-  const currentDate = startOfDay(new Date());
+    console.log("Processing completed for all files.");
 
-  const allPosts = await Promise.all(
-    fileNames.map(async (fileName) => {
-      const fullPath = path.join(postsDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
+    const publishedPosts = [];
+    const finalAllPosts = [];
 
-      const metadata = extractMetadata(fileContents);
-
-      if (!metadata) {
-        console.warn(`Metadata missing for file: ${fileName}`);
-        return null;
-      }
-
-      const postId = metadata.id;
-      const likesCount = await fetchLikesCount(postId);
-
-      console.log("likesCount", likesCount);
-
-      const slug = fileName.replace(".mdx", "");
-
-      const post = {
-        slug,
-        ...metadata,
-        likes: likesCount,
-      };
-
-      console.log("post", post);
-
-      const postDate = startOfDay(parseISO(metadata.publishDate));
-      return {
-        post,
-        isPublished: !metadata.draft && postDate <= currentDate,
-      };
-    })
-  );
-
-  const publishedPosts = [];
-  const finalAllPosts = [];
-
-  for (const item of allPosts) {
-    if (item?.post) {
-      finalAllPosts.push(item.post);
-      if (item.isPublished) {
-        publishedPosts.push(item.post);
+    for (const item of allPosts) {
+      if (item?.post) {
+        finalAllPosts.push(item.post);
+        if (item.isPublished) {
+          publishedPosts.push(item.post);
+        }
       }
     }
+
+    console.log(`Final all posts count: ${finalAllPosts.length}`);
+    console.log(`Published posts count: ${publishedPosts.length}`);
+
+    const cacheDir = path.join(process.cwd(), "content/cache");
+    console.log(`Cache directory: ${cacheDir}`);
+
+    if (!fs.existsSync(cacheDir)) {
+      console.log("Creating cache directory...");
+      fs.mkdirSync(cacheDir);
+    }
+
+    console.log("Writing cache files...");
+
+    fs.writeFileSync(
+      path.join(cacheDir, "all-posts.json"),
+      JSON.stringify(finalAllPosts, null, 2)
+    );
+
+    fs.writeFileSync(
+      path.join(cacheDir, "published-posts.json"),
+      JSON.stringify(publishedPosts, null, 2)
+    );
+
+    console.log("Cache files written successfully.");
+    return publishedPosts;
+  } catch (error) {
+    console.error("❌ Error in generatePostsCache:", error);
+    throw error; // Propagate error for higher-level handling
   }
-
-  const cacheDir = path.join(process.cwd(), "content/cache");
-  if (!fs.existsSync(cacheDir)) {
-    fs.mkdirSync(cacheDir);
-  }
-
-  fs.writeFileSync(
-    path.join(cacheDir, "all-posts.json"),
-    JSON.stringify(finalAllPosts, null, 2)
-  );
-
-  fs.writeFileSync(
-    path.join(cacheDir, "published-posts.json"),
-    JSON.stringify(publishedPosts, null, 2)
-  );
-
-  return publishedPosts;
 }

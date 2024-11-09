@@ -49,7 +49,7 @@ export default async function Contact(props: {
 
     // Insert data into Supabase
     const { error } = await supabase
-      .from("contact_messages")
+      .from("mdxblog_contact_messages")
       .insert([{ name, email, message }]);
 
     if (error) {
@@ -65,7 +65,7 @@ export default async function Contact(props: {
   return (
     <div className="flex flex-col items-center max-w-3xl gap-8 pt-12">
       <form
-        className="flex-1 flex flex-col sm:w-[500px] w-[300px] gap-4"
+        className="flex-1 flex flex-col sm:w-[600px] w-[300px] gap-4"
         action={action}
       >
         <h1 className="text-6xl font-black">Contact</h1>

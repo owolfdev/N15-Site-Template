@@ -1,0 +1,108 @@
+export const metadata = {
+  id: "660b6967-ac51-4184-a23b-90fb1942c689",
+  type: "blog",
+  title: "How to Use MDXBlog",
+  author: "O Wolfson",
+  publishDate: "2023-12-11",
+  description:
+    "This guide will walk you through using MDXBlog, which is designed to work seamlessly with VSCode and requires local installation.",
+  categories: ["Web Development"],
+  tags: ["mdx", "user", "guide"],
+  modifiedDate: "2024-08-28T09:51:36.043Z",
+  image: null,
+  draft: false,
+  relatedPosts: ["how-to-install-mdx-blog-and-deploy-on-vercel"],
+};
+
+import { CustomImage } from "@/components/mdx/image";
+
+MDXBlog is a blogging platform, created for developers who like the simplicity of content creation with Markdown, but also want to leverage the power of React components within that content. This guide will walk you through using MDXBlog, which is designed to work seamlessly with VSCode.
+
+---
+
+### Getting Started
+
+#### Installation
+
+For detailed installation instructions, refer to this comprehensive [installation guide](/blog/how-to-install-mdx-blog-and-deploy-on-vercel).
+
+#### Running the App in Development Mode
+
+After installation, run the app in development mode.
+
+```bash
+npm run dev
+```
+
+While in development mode, on a desktop device, MDXBlog enables features like admin panel, a '+' (add) button in the nav bar for adding new posts, and edit buttons on post pages for quick document editing.
+
+### Adding Posts
+
+1. **Using the '+' (add) Button** (dev mode only):
+   - In the nav bar, tap the '+' icon. This will navigate the user to an form for creating new posts directly within the app.
+2. **Manually Adding MDX Files**:
+   - Alternatively, you can add posts by creating MDX files in the `data/posts` directory of your project.
+
+### Creating Content with Markdown and MDX
+
+MDXBlog allows users to write using standard Markdown or in MDX, Markdown for the component era, allowing users to enrich posts with React components.
+
+Some of the custom components available:
+
+#### 1. Embedding YouTube Videos with the `YouTube` Component.
+
+```jsx
+<YouTube videoId="your_video_id" />
+```
+
+Replace `your_video_id` with the actual ID of the YouTube video you want to embed.
+
+```text
+http://www.youtube.com/watch?v=7eky7qwGL4E
+
+videoId = "7eky7qwGL4E"
+```
+
+#### 2. Adding Images
+
+The custom `Image` component, based on Next.js Image, lets you add images efficiently:
+
+```jsx
+<CustomImage
+  imgSrc="/path/to/your/image.jpg"
+  alt="Descriptive text"
+  caption="Image caption"
+/>
+```
+
+Customize `imgSrc`, `alt`, and `caption` as needed.
+
+#### 3. Showcasing Code Snippets
+
+For displaying code, use the `Code` component:
+
+use single backticks for inline code and triple backticks for blocks of code. Style these with the appropriate language for correct highlighting.
+
+````javascript
+// ```javascript
+// const greeting = "Hello World!";
+// ```
+// uncommented will render as:
+
+const hello = "Hello World!";
+````
+
+This component will render your code with syntax highlighting and a proper layout.
+
+### Editing Posts
+
+- **Editing In a Text Editor**: You can edit your posts locally using a text editor. For the best experience, it's recommended to use VSCode.
+- **In-Browser Editing**: MDXBlog also supports editing directly in the browser for quick changes and previews.
+
+### Configuring Your Blog
+
+- **Accessing Settings**: Customize your blog's settings and configurations by tapping the gear icon in the nav bar, which takes you to the settings page.
+
+### Conclusion
+
+MDXBlog bridges the gap between simplicity and functionality, offering a flexible platform for bloggers who appretiate the integration of modern web technologies and the unmatched developer experience of MDX.
